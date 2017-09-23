@@ -64,3 +64,5 @@ group :developement, :test do
 end
 
 gem 'slim'
+
+gem 'sorcery'
