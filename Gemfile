@@ -64,5 +64,6 @@ group :development, :test do
 end
 
 gem 'slim'
+gem 'slim-rails'
 
 gem 'sorcery'
