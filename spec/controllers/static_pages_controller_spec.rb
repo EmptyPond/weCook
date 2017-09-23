@@ -4,7 +4,7 @@ RSpec.describe StaticPagesController, type: :controller do
   describe "static_pages#index" do
     it "should allow initial access to landing page" do 
       get :index
-      expect(response).to eq(:success)
+      expect(response).to have_http_status(:success)
     end 
   end
 end
