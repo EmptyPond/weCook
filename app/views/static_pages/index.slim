@@ -1,0 +1,7 @@
+div.container
+  div.row
+    - if current_user
+      = link_to "log out", logout_path, class:"col-3"
+    - else
+      = link_to "sign up!", signup_path, class:"col-3"
+      = link_to "log in!", login_path, class:"col-3"
