@@ -1,0 +1,7 @@
+- @recipe.each do |r|
+  h1
+    div.col-4
+      = link_to r.name,recipe_path(r)
+  h5
+    div.col-4
+      = r.description
