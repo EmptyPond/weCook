@@ -9,6 +9,14 @@ RSpec.describe RecipesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe "recipes#new" do
+    it "should show the new recipes page" do
+      get :new
+
+      expect(response).to have_http_status(:success)
+    end
+  end
   
   describe "recipes#show" do
     it "should show a recipe we planted" do
@@ -26,7 +34,7 @@ RSpec.describe RecipesController, type: :controller do
       post :create, params: { recipe: { name: "Another epic recipe", description: "food" } }
 
       recipe = Recipe.last
-      expect(response).to redirect_to recipes_path(id:recipe.id)
+      expect(response).to redirect_to recipes_path(recipe.id)
       expect(recipe.description).to eq("food")
       expect(recipe.user).to eq(user)
     end
