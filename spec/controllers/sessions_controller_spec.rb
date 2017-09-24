@@ -4,7 +4,7 @@ RSpec.describe SessionsController, type: :controller do
   describe "sessions#new" do 
     it "should allow us to access the login page" do
       get :new
-      expect(response).to have_http_response(:success)
+      expect(response).to have_http_status(:success)
     end
   end
   describe "sessions#create" do
@@ -25,7 +25,7 @@ RSpec.describe SessionsController, type: :controller do
   describe "sessions#destroy" do
     it "should allow us to logout" do
       user = FactoryGirl.create(:user)
-      login(user)
+      login_user(user)
       get :destroy
 
       expect(response).to redirect_to root_path

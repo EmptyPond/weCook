@@ -4,7 +4,7 @@ RSpec.describe UsersController, type: :controller do
   describe "users#new" do 
     it "should allow us to visit the signup page" do
       get :new
-      expect(response).to have_http_response(:success)
+      expect(response).to have_http_status(:success)
     end
   end
   describe "users#create" do
