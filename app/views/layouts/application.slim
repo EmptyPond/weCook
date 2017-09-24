@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title WeCook
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    body
+      nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        a.navbar-brand href="#"  WeCook
+        button.navbar-toggler aria-controls="navbarNav" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarNav" data-toggle="collapse" type="button" 
+          span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+          ul.navbar-nav
+            li.nav-item.active
+              a.nav-link href=root_path
+                | Home
+                span.sr-only (current)
+            - if current_user
+              li.nav-item
+                a.nav-link href=logout_path
+                  | Log out
+            - else
+              li.nav-item
+                a.nav-link href=login_path
+                  | Log in
+              li.nav-item
+                a.nav-link href=signup_path
+                  | Sign up
+      = yield
