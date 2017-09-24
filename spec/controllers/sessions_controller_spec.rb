@@ -10,14 +10,13 @@ RSpec.describe SessionsController, type: :controller do
   describe "sessions#create" do
     it "should allow us to login and have a current_user" do 
       user = FactoryGirl.create(:user)
-      post :create, params: { user: {email: "awesome@email.com", password: "password" } }
+      post :create, params: { email: "awesome@email.com", password: "password" } 
 
       expect(response).to redirect_to root_path
-      #will this work?
       expect(current_user.email).to eq("awesome@email.com")
     end
     it "should redirect to login if our credentials do not exist" do
-      post :create, params: { user: {email: "I don't exist", password: "no I don't" } }
+      post :create, params: { email: "I don't exist", password: "no I don't" } 
 
       expect(response).to redirect_to login_path
     end
@@ -29,7 +28,6 @@ RSpec.describe SessionsController, type: :controller do
       get :destroy
 
       expect(response).to redirect_to root_path
-      #is this accurate?
       expect(current_user.email).to eq(nil)
     end
   end

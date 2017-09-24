@@ -13,6 +13,7 @@ RSpec.describe UsersController, type: :controller do
 
       expect(response).to redirect_to root_path
       expect(User.last.email).to eq("darthvader@therepublic.com")
+      expect(current_user.email).to eq("darthvader@therepublic.com")
     end
   end
 end
