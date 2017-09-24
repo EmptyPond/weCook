@@ -13,7 +13,7 @@ RSpec.describe SessionsController, type: :controller do
       post :create, params: { email: "awesome@email.com", password: "password" } 
 
       expect(response).to redirect_to root_path
-      expect(current_user.email).to eq("awesome@email.com")
+      expect(controller.current_user.email).to eq("awesome@email.com")
     end
     it "should redirect to login if our credentials do not exist" do
       post :create, params: { email: "I don't exist", password: "no I don't" } 
@@ -28,7 +28,7 @@ RSpec.describe SessionsController, type: :controller do
       get :destroy
 
       expect(response).to redirect_to root_path
-      expect(current_user.email).to eq(nil)
+      expect(controller.current_user).to eq(nil)
     end
   end
 end
