@@ -34,9 +34,9 @@ RSpec.describe RecipesController, type: :controller do
       post :create, params: { recipe: { name: "Another epic recipe", description: "food" } }
 
       recipe = Recipe.last
-      expect(response).to redirect_to recipes_path(recipe.id)
+      expect(response).to redirect_to recipe_path(recipe.id)
       expect(recipe.description).to eq("food")
-      expect(recipe.user).to eq(user)
+      expect(recipe.users.last).to eq(user)
     end
   end
 end
