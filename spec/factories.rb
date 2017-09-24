@@ -1,22 +1,16 @@
 FactoryGirl.define do
 
   factory :user do
-    email "awesome@email.com"
+    sequence :email do |n|
+      "awesomeemail#{n}@email.com"
+    end
     password "password"
     password_confirmation "password"
-
-    after(:create) do |user|
-      user.kitchen << FactoryGirl.create(:kitchen)
-    end
   end
 
   factory :recipe do
     name "best food ever"
     description "as the name implies"
-
-    after(:create) do |recipe|
-      recipe.kitchen << FactoryGirl.create(:kitchen)
-    end
   end
 
   factory :kitchen do 
