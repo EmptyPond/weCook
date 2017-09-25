@@ -34,7 +34,7 @@ RSpec.describe StepsController, type: :controller do
       post :create, params: { recipe_id: kit.recipe.id, steps: { step_num: 42, description: "life" } }
 
       expect(Recipe.last.steps.last.step_num).to eq(42)
-      expect(User.last.steps.last.step_num).to eq(42)
+      expect(User.last.recipes.last.steps.last.step_num).to eq(42)
     end
 
     it "should NOT allow us to save if we are not logged in" do
@@ -50,7 +50,7 @@ RSpec.describe StepsController, type: :controller do
       login_user(user)
       post :create, params: { recipe_id: recipe.id, steps: { step_num: 42, description: "life" } }
 
-      expect(response).to have_http_status(:forbidden)
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end

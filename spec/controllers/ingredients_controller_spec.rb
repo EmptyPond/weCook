@@ -34,7 +34,7 @@ RSpec.describe IngredientsController, type: :controller do
       post :create, params: { recipe_id: kit.recipe.id, ingredients: { name: "mushroom", amount: "2 pounds" } }
 
       expect(Recipe.last.ingredients.last.name).to eq("mushroom")
-      expect(User.last.ingredients.last.name).to eq("mushroom")
+      expect(User.last.recipes.last.ingredients.last.name).to eq("mushroom")
     end
 
     it "should NOT allow us to save if we are not logged in" do
@@ -50,7 +50,7 @@ RSpec.describe IngredientsController, type: :controller do
       login_user(user)
       post :create, params: { recipe_id: recipe.id, ingredients: { name: "mushroom", amount: "2 pounds" } }
 
-      expect(response).to have_http_status(:forbidden)
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end

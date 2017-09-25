@@ -2,3 +2,22 @@ div.col-4
   = @recipe.name
 div.col-4
   = @recipe.description
+
+- @recipe.ingredients.each do |i|
+  h4
+    = i.name
+  h4
+    = i.amount
+
+- @recipe.steps.each do |s|
+  h4
+    = s.step_num
+  h4
+    = s.description
+
+
+div.col-4
+  = link_to "Add Ingredient", new_recipe_ingredient_path(@recipe.id)
+
+div.col-4
+  = link_to "Add Steps", new_recipe_step_path(@recipe.id)

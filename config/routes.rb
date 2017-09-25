@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :users, only: [:new,:create]
   resources :sessions, only: :create
   resources :recipes, only: [:new,:show,:create,:index] do
-    resources :steps, only: :new
-    resources :ingredients, only: :new
+    resources :steps, only: [:new,:create]
+    resources :ingredients, only: [:new,:create]
   end
 
 end
