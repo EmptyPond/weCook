@@ -1,5 +1,6 @@
 class StepsController < ApplicationController
-  before_action :require_login, only: :new
+  before_action :require_login, only: [:new,:create]
+
   def new
     #probably needs to be refactored due to being long
     #is this actually how I'm suppose to add ingredeints to recipe? feels smelly
@@ -12,9 +13,20 @@ class StepsController < ApplicationController
     end
   end
 
+  def create
+    @step = Recipe.find(params[:recipe_id]).steps.new(steps_params)
+    if current_user != @step.recipe.users.last
+      render plain: "Unauthorized!", status: :unauthorized
+    elsif @step.save
+      redirect_to recipe_path(params[:recipe_id])
+    else
+      #this will be if the inputs aren't ok. doesn't validate currently. 
+      redirect_to new_recipe_ingredient_path(recipe_id:params[:recipe_id])
+    end
+  end
   private
 
-  def ingredients_params
-    params.require(:ingredients).permit(:name,:amount)
+  def steps_params
+    params.require(:steps).permit(:step_num,:description)
   end
 end
