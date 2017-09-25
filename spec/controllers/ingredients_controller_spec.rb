@@ -23,6 +23,33 @@ RSpec.describe IngredientsController, type: :controller do
       login_user(user)
       get :new, params: {recipe_id: recipe.id}
 
+      expect(response).to redirect_to recipe_path(recipe.id)
+    end
+  end
+
+  describe "ingredients#create" do
+    it "should allow us to save ingredients into the database if we are logged in" do
+      kit = FactoryGirl.create(:kitchen)
+      login_user(kit.user)
+      post :create, params: { recipe_id: kit.recipe.id, ingredients: { name: "mushroom", amount: "2 pounds" } }
+
+      expect(Recipe.last.ingredients.last.name).to eq("mushroom")
+      expect(User.last.ingredients.last.name).to eq("mushroom")
+    end
+
+    it "should NOT allow us to save if we are not logged in" do
+      kit = FactoryGirl.create(:kitchen)
+      post :create, params: { recipe_id: kit.recipe.id, ingredients: { name: "mushroom", amount: "2 pounds" } }
+
+      expect(response).to redirect_to login_path
+    end
+
+    it "should NOT allow us to save if we don't own the recipe" do
+      recipe = FactoryGirl.create(:recipe)
+      user = FactoryGirl.create(:user)
+      login_user(user)
+      post :create, params: { recipe_id: recipe.id, ingredients: { name: "mushroom", amount: "2 pounds" } }
+
       expect(response).to have_http_status(:forbidden)
     end
   end

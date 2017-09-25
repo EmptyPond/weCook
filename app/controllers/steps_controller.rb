@@ -8,7 +8,7 @@ class StepsController < ApplicationController
     #also do we want an "owner" of a recipe?
     if current_user != @step.recipe.users.last
       #should add alert here telling user that they can't edit this
-      redirect_to recipe_path(params[:recipe_id]), status: :forbidden
+      redirect_to recipe_path(params[:recipe_id])
     end
   end
 
