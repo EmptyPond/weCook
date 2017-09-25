@@ -11,10 +11,18 @@ RSpec.describe RecipesController, type: :controller do
   end
 
   describe "recipes#new" do
-    it "should show the new recipes page" do
+    it "should show the new recipes page if I am logged in" do
+      user = FactoryGirl.create(:user)
+      login_user(user)
       get :new
 
       expect(response).to have_http_status(:success)
+    end
+
+    it "shouldn't let not logged in users to view the new recipe page" do
+      get :new
+
+      expect(response).to redirect_to login_path
     end
   end
   

@@ -1,4 +1,6 @@
 class RecipesController < ApplicationController
+  before_action :require_login, only: [:new,:create]
+
   def index
     @recipe = Recipe.all
   end
@@ -12,7 +14,6 @@ class RecipesController < ApplicationController
   end
 
   def create
-    #since we don't have auth for this action right now will break if we do this while not logged in
     @recipe = current_user.recipes.create(recipe_params)
     if @recipe.save
       redirect_to recipe_path(id:@recipe.id)
