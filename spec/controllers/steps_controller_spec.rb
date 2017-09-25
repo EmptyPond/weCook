@@ -31,7 +31,7 @@ RSpec.describe StepsController, type: :controller do
     it "should allow us to save steps into the database if we are logged in" do
       kit = FactoryGirl.create(:kitchen)
       login_user(kit.user)
-      post :create, params: { recipe_id: kit.recipe.id, steps: { step_num: 42, description: "life" } }
+      post :create, params: { recipe_id: kit.recipe.id, step: { step_num: 42, description: "life" } }
 
       expect(Recipe.last.steps.last.step_num).to eq(42)
       expect(User.last.recipes.last.steps.last.step_num).to eq(42)
@@ -39,7 +39,7 @@ RSpec.describe StepsController, type: :controller do
 
     it "should NOT allow us to save if we are not logged in" do
       kit = FactoryGirl.create(:kitchen)
-      post :create, params: { recipe_id: kit.recipe.id, steps: { step_num: 42, description: "life" } }
+      post :create, params: { recipe_id: kit.recipe.id, step: { step_num: 42, description: "life" } }
 
       expect(response).to redirect_to login_path
     end
@@ -48,7 +48,7 @@ RSpec.describe StepsController, type: :controller do
       recipe = FactoryGirl.create(:recipe)
       user = FactoryGirl.create(:user)
       login_user(user)
-      post :create, params: { recipe_id: recipe.id, steps: { step_num: 42, description: "life" } }
+      post :create, params: { recipe_id: recipe.id, step: { step_num: 42, description: "life" } }
 
       expect(response).to have_http_status(:unauthorized)
     end
