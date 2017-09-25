@@ -59,7 +59,7 @@ RSpec.describe RecipesController, type: :controller do
     it "should allow us to view the edit page if we own the recipe" do
       kit = FactoryGirl.create(:kitchen)
       login_user(kit.user)
-      get :edit
+      get :edit, params: { id: kit.recipe.id }
 
       expect(response).to have_http_status(:success)
     end
@@ -68,13 +68,14 @@ RSpec.describe RecipesController, type: :controller do
       user = FactoryGirl.create(:user)
       recipe = FactoryGirl.create(:recipe)
       login_user(user)
-      get :edit
+      get :edit, params: { id: recipe.id }
 
       expect(response).to redirect_to recipe_path(recipe)
     end
 
     it "shouldn't allow us to view the edit page if we are not logged in" do
-      get :edit
+      recipe = FactoryGirl.create(:recipe)
+      get :edit, params: { id: recipe.id }
 
       expect(response).to redirect_to login_path
     end
@@ -84,21 +85,23 @@ RSpec.describe RecipesController, type: :controller do
     it "should allow me to update a recipe" do
       kit = FactoryGirl.create(:kitchen)
       login_user(kit.user)
-      patch :update, params: { recipe: { name: "updated!", description: "delicious!" } }
+      patch :update, params: { id: kit.recipe.id, recipe: { name: "updated!", description: "delicious!" } }
+
+      expect(Recipe.last.name).to eq("updated!")
     end
 
     it "should NOT allow us to update if we don't own the recipe" do
       recipe = FactoryGirl.create(:recipe)
       user = FactoryGirl.create(:user)
       login_user(user)
-      patch :update, params: { recipe: { name: "updated!", description: "delicious!" } }
+      patch :update, params: { id: recipe.id, recipe: { name: "updated!", description: "delicious!" } }
 
       expect(response).to have_http_status(:unauthorized)
     end
 
     it "should NOT allow us to update if we are not logged in" do
       kit = FactoryGirl.create(:kitchen)
-      patch :update, params: { recipe: { name: "updated!", description: "delicious!" } }
+      patch :update, params: { id: kit.recipe.id, recipe: { name: "updated!", description: "delicious!" } }
 
       expect(response).to redirect_to login_path
     end

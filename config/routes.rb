@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new', as: 'signup'
   resources :users, only: [:new,:create]
   resources :sessions, only: :create
-  resources :recipes, only: [:new,:show,:create,:index] do
+  resources :recipes, only: [:new,:show,:create,:index,:edit,:update] do
     resources :steps, only: [:new,:create]
     resources :ingredients, only: [:new,:create]
   end
