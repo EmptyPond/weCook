@@ -1,0 +1,9 @@
+= form_for @recipe do |r|
+  .field
+    = r.label :name
+    = r.text_field :name
+  .field
+    = r.label :description
+    = r.text_field :description
+  .action
+    = r.submit "Update"
