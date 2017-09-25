@@ -3,5 +3,6 @@ class Kitchens < ActiveRecord::Migration[5.0]
     create_table :kitchens do |t|
       t.integer :user_id
       t.integer :recipe_id
+    end
   end
 end

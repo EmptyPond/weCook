@@ -4,5 +4,6 @@ class Steps < ActiveRecord::Migration[5.0]
       t.integer :step_num
       t.text :description
       t.integer :recipe_id
+    end
   end
 end
