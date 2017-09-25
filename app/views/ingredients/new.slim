@@ -1,0 +1,9 @@
+= form_for @ingredient, url: "#"  do |i|
+  .field
+    = i.label :name
+    = i.text_field :name
+  .field
+    = i.label :amount
+    = i.text_field :amount
+  .action
+    = i.submit "Create"
