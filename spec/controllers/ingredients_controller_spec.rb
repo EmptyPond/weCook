@@ -1,5 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe IngredientsController, type: :controller do
+  describe "ingredients#new" do
+    it "should allow me to view new step page if I am logged in and own the recipe" do
+      kit = FactoryGirl.create(:kitchen)
+      login_user(kit.user)
+      get :new
 
+      expect(response).to have_http_status(:success)
+    end
+
+    it "shouldn't allow me to view new step page if I am not logged in" do
+      kit = FactoryGirl.create(:kitchen)
+      get :new
+
+      expect(response).to redirect_to login_path
+    end
+
+    it "shoudn't allow me to view new step page even if I'm logged in but don't own the recipe" do
+      recipe = FactoryGirl.create(:recipe)
+      user = FactoryGirl.create(:user)
+      login_user(user)
+      get :new
+
+      expect(response).to have_http_status(:forbidden)
+    end
+  end
 end
