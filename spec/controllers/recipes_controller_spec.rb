@@ -38,5 +38,12 @@ RSpec.describe RecipesController, type: :controller do
       expect(recipe.description).to eq("food")
       expect(recipe.users.last).to eq(user)
     end
+
+    it "shouldn't allow us to create a recipe if we are not logged in" do
+      post :create, params: { recipe: { name: "recipe", description:"another one" } }
+
+      expect(response).to redirect_to login_path
+      expect(Recipe.count).to eq(0)
+    end
   end
 end
