@@ -1,4 +1,4 @@
 class Kitchen < ApplicationRecord
-  belongs_to :user
-  belongs_to :recipe
+  has_and_belongs_to_many :user
+  has_one :recipe
 end
