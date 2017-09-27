@@ -31,11 +31,11 @@ RSpec.describe IngredientsController, type: :controller do
   describe "ingredients#create" do
     it "should allow us to save ingredients into the database if we are logged in" do
       recipe = FactoryGirl.create(:recipe)
-      login_user(recipe.users.last)
+      login_user(recipe.kitchen.last.user.last)
       post :create, params: { recipe_id: recipe.id, ingredient: { name: "mushroom", amount: "2 pounds" } }
 
-      expect(Recipe.last.ingredients.last.name).to eq("mushroom")
-      expect(User.last.recipes.last.ingredients.last.name).to eq("mushroom")
+      expect(Kitchen.last.ingredients.last.name).to eq("mushroom")
+      expect(User.last.kitchen.last.ingredients.last.name).to eq("mushroom")
     end
 
     it "should NOT allow us to save if we are not logged in" do

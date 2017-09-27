@@ -21,12 +21,12 @@ FactoryGirl.define do
   factory :ingredient do
     name "awesome"
     amount "alot"
-    association :recipe
+    association :kitchen
   end
 
   factory :step do
     step_num 1
     description "the only step you need for great food"
-    association :recipe
+    association :kitchen
   end
 end

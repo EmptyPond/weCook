@@ -44,7 +44,7 @@ RSpec.describe RecipesController, type: :controller do
       recipe = Recipe.last
       expect(response).to redirect_to recipe_path(recipe.id)
       expect(recipe.description).to eq("food")
-      expect(recipe.users.last).to eq(user)
+      expect(recipe.kitchen.last.user.last).to eq(user)
     end
 
     it "shouldn't allow us to create a recipe if we are not logged in" do
@@ -58,7 +58,7 @@ RSpec.describe RecipesController, type: :controller do
   describe "recipes#edit" do
     it "should allow us to view the edit page if we own the recipe" do
       recipe = FactoryGirl.create(:recipe)
-      login_user(recipe.users.last)
+      login_user(recipe.kitchen.last.user.last)
       get :edit, params: { id: recipe.id }
 
       expect(response).to have_http_status(:success)
@@ -84,7 +84,7 @@ RSpec.describe RecipesController, type: :controller do
   describe "recipes#update" do
     it "should allow me to update a recipe" do
       recipe = FactoryGirl.create(:recipe)
-      login_user(recipe.users.last)
+      login_user(recipe.kitchen.last.user.last)
       patch :update, params: { id: recipe.id, recipe: { name: "updated!", description: "delicious!" } }
 
       expect(Recipe.last.name).to eq("updated!")

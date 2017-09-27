@@ -25,8 +25,8 @@ class RecipesController < ApplicationController
 
   def edit
     @recipe = Recipe.find(params[:id])
-    #another place where we have to change if we have ownership
-    if current_user != @recipe.users.last
+    #will need to edit when we add the function for multiple users to own a single kitchen
+    if current_user != @recipe.kitchen.last.user.last
       redirect_to recipe_path(params[:id])
     end
   end
@@ -34,7 +34,7 @@ class RecipesController < ApplicationController
   def update
     @recipe = Recipe.find(params[:id])
     #another spot we would have to change if we add explicit ownership of recipes.
-    if current_user != @recipe.users.last
+    if current_user != @recipe.kitchen.last.user.last
       render plain: "Unauthorized!", status: :unauthorized
     elsif @recipe.update(recipe_params)
       #will add an else statement here if we have validations on types of input. 
