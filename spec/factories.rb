@@ -8,14 +8,14 @@ FactoryGirl.define do
     password_confirmation "password"
   end
 
+  factory :kitchen do 
+    after(:create) {|kitchen| kitchen.user = [create(:user)]}
+  end
+
   factory :recipe do
     name "best food ever"
     description "as the name implies"
-  end
-
-  factory :kitchen do 
-    association :user
-    association :recipe
+    association :kitchen
   end
 
   factory :ingredient do

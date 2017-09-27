@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170927011221) do
+ActiveRecord::Schema.define(version: 20170927012951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,13 @@ ActiveRecord::Schema.define(version: 20170927011221) do
   end
 
   create_table "kitchens", force: :cascade do |t|
+  end
+
+  create_table "kitchens_users", id: false, force: :cascade do |t|
     t.integer "user_id"
+    t.integer "kitchen_id"
+    t.index ["kitchen_id"], name: "index_kitchens_users_on_kitchen_id", using: :btree
+    t.index ["user_id"], name: "index_kitchens_users_on_user_id", using: :btree
   end
 
   create_table "recipes", force: :cascade do |t|
