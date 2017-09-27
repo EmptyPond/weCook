@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe IngredientsController, type: :controller do
   describe "ingredients#new" do
     it "should allow me to view new step page if I am logged in and own the recipe" do
-      kit = FactoryGirl.create(:kitchen)
-      login_user(kit.user)
-      get :new, params: {recipe_id: kit.recipe.id}
+      recipe = FactoryGirl.create(:recipe)
+      kit = Kitchen.last
+      login_user(kit.user.last)
+      get :new, params: {recipe_id: recipe.id}
 
       expect(response).to have_http_status(:success)
     end

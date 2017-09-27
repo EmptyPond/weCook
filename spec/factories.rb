@@ -15,7 +15,7 @@ FactoryGirl.define do
   factory :recipe do
     name "best food ever"
     description "as the name implies"
-    association :kitchen
+    after(:create) {|recipe| recipe.kitchen = [create(:kitchen)]}
   end
 
   factory :ingredient do
