@@ -3,5 +3,5 @@ class User < ApplicationRecord
 
   validates :password, confirmation: true
   has_and_belongs_to_many :kitchen
-  has_many :recipes, through: :kitchens
+  has_many :recipes, through: :kitchen
 end
