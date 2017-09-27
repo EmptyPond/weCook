@@ -5,14 +5,14 @@ RSpec.describe StepsController, type: :controller do
     it "should allow me to view new step page if I am logged in and own the recipe" do
       recipe = FactoryGirl.create(:recipe)
       login_user(recipe.kitchen.last.user.last)
-      get :new, params: { recipe_id: recipe.id }
+      get :new, params: { kitchen_id: recipe.kitchen.last.id }
 
       expect(response).to have_http_status(:success)
     end
 
     it "shouldn't allow me to view new step page if I am not logged in" do
       recipe = FactoryGirl.create(:recipe)
-      get :new, params: { recipe_id: recipe.id }
+      get :new, params: { kitchen_id: recipe.kitchen.last.id }
 
       expect(response).to redirect_to login_path
     end
@@ -21,9 +21,9 @@ RSpec.describe StepsController, type: :controller do
       recipe = FactoryGirl.create(:recipe)
       user = FactoryGirl.create(:user)
       login_user(user)
-      get :new, params: {recipe_id: recipe.id } 
+      get :new, params: {kitchen_id: recipe.kitchen.last.id } 
 
-      expect(response).to redirect_to recipe_path(recipe.id)
+      expect(response).to redirect_to recipe_kitchen_path(recipe_id:recipe.id,id:recipe.kitchen.last.id)
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe StepsController, type: :controller do
     it "should allow us to save steps into the database if we are logged in" do
       recipe = FactoryGirl.create(:recipe)
       login_user(recipe.kitchen.last.user.last)
-      post :create, params: { recipe_id: recipe.id, step: { step_num: 42, description: "life" } }
+      post :create, params: { kitchen_id: recipe.kitchen.last.id, step: { step_num: 42, description: "life" } }
 
       expect(Kitchen.last.steps.last.step_num).to eq(42)
       expect(User.last.kitchen.last.steps.last.step_num).to eq(42)
@@ -39,7 +39,7 @@ RSpec.describe StepsController, type: :controller do
 
     it "should NOT allow us to save if we are not logged in" do
       recipe = FactoryGirl.create(:recipe)
-      post :create, params: { recipe_id: recipe.id, step: { step_num: 42, description: "life" } }
+      post :create, params: { kitchen_id: recipe.kitchen.last.id, step: { step_num: 42, description: "life" } }
 
       expect(response).to redirect_to login_path
     end
@@ -48,7 +48,7 @@ RSpec.describe StepsController, type: :controller do
       recipe = FactoryGirl.create(:recipe)
       user = FactoryGirl.create(:user)
       login_user(user)
-      post :create, params: { recipe_id: recipe.id, step: { step_num: 42, description: "life" } }
+      post :create, params: { kitchen_id: recipe.kitchen.last.id, step: { step_num: 42, description: "life" } }
 
       expect(response).to have_http_status(:unauthorized)
     end

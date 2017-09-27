@@ -9,6 +9,7 @@ FactoryGirl.define do
   end
 
   factory :kitchen do 
+    name "awesome kitchen"
     after(:create) {|kitchen| kitchen.user = [create(:user)]}
   end
 
