@@ -2,6 +2,7 @@ class KitchensController < ApplicationController
   before_action :require_login, only: [:create,:edit,:update]
 
   def show
+    @kitchen = Kitchen.find(params[:id])
   end
 
   def create
@@ -9,7 +10,7 @@ class KitchensController < ApplicationController
     if @kitchen.save
       redirect_to edit_kitchen_path(id:@kitchen.id)
     else
-      redirect_to recipe_path(id:params[:recipe_id])
+      redirect_to recipe_path(id:params[:recipe_])
     end
   end
 

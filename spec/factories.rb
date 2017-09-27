@@ -11,12 +11,12 @@ FactoryGirl.define do
   factory :kitchen do 
     name "awesome kitchen"
     after(:create) {|kitchen| kitchen.user = [create(:user)]}
+    association :recipe
   end
 
   factory :recipe do
     name "best food ever"
     description "as the name implies"
-    after(:create) {|recipe| recipe.kitchen = [create(:kitchen)]}
   end
 
   factory :ingredient do

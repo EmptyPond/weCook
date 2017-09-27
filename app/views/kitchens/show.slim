@@ -1,2 +1,13 @@
 h1
-  | this is the kitchen show page
+  | Ingredients!
+  div.col-4
+    - @kitchen.ingredients.each do |i|
+      = i.name
+      = i.amount
+    = link_to "Add Ingredients", new_kitchen_ingredient_path(kitchen_id:@kitchen.id)
+h1
+  | Steps!
+  div.col-4
+    - @kitchen.steps.each do |s|
+      = s.step_num
+      = s.description

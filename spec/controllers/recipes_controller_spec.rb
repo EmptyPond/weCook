@@ -57,20 +57,20 @@ RSpec.describe RecipesController, type: :controller do
 
   describe "recipes#edit" do
     it "should allow us to view the edit page if we own the recipe" do
-      recipe = FactoryGirl.create(:recipe)
-      login_user(recipe.kitchen.last.user.last)
-      get :edit, params: { id: recipe.id }
+      kitchen = FactoryGirl.create(:kitchen)
+      login_user(kitchen.user.last)
+      get :edit, params: { id: kitchen.recipe.id }
 
       expect(response).to have_http_status(:success)
     end
 
     it "shouldn't allow us to view the edit page if we do not own the recipe" do
+      kitchen = FactoryGirl.create(:kitchen)
       user = FactoryGirl.create(:user)
-      recipe = FactoryGirl.create(:recipe)
       login_user(user)
-      get :edit, params: { id: recipe.id }
+      get :edit, params: { id: kitchen.recipe.id }
 
-      expect(response).to redirect_to recipe_path(recipe)
+      expect(response).to redirect_to recipe_path(kitchen.recipe)
     end
 
     it "shouldn't allow us to view the edit page if we are not logged in" do
@@ -83,18 +83,18 @@ RSpec.describe RecipesController, type: :controller do
 
   describe "recipes#update" do
     it "should allow me to update a recipe" do
-      recipe = FactoryGirl.create(:recipe)
-      login_user(recipe.kitchen.last.user.last)
-      patch :update, params: { id: recipe.id, recipe: { name: "updated!", description: "delicious!" } }
+      kitchen = FactoryGirl.create(:kitchen)
+      login_user(kitchen.user.last)
+      patch :update, params: { id: kitchen.recipe.id, recipe: { name: "updated!", description: "delicious!" } }
 
       expect(Recipe.last.name).to eq("updated!")
     end
 
     it "should NOT allow us to update if we don't own the recipe" do
-      recipe = FactoryGirl.create(:recipe)
+      kitchen = FactoryGirl.create(:kitchen)
       user = FactoryGirl.create(:user)
       login_user(user)
-      patch :update, params: { id: recipe.id, recipe: { name: "updated!", description: "delicious!" } }
+      patch :update, params: { id: kitchen.recipe.id, recipe: { name: "updated!", description: "delicious!" } }
 
       expect(response).to have_http_status(:unauthorized)
     end
