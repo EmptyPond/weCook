@@ -33,7 +33,7 @@ RSpec.describe KitchensController, type: :controller do
       post :create, params: {recipe_id: kitchen.recipe.id, kitchen: { name: "this kitchen", recipe_id: kitchen.recipe.id } }
 
       expect(Kitchen.last.name).to eq("this kitchen")
-      expect(response).to redirect_to edit_kitchen_path(id:Kitchen.last.id)
+      expect(response).to redirect_to recipe_kitchen_path(recipe_id:kitchen.recipe.id,id:Kitchen.last.id)
     end
 
     it "should NOT allow me to create a kitchen if I'm not logged in" do

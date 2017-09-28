@@ -12,16 +12,16 @@ class KitchensController < ApplicationController
   def create
     @kitchen = current_user.kitchen.new(kitchen_params)
     if @kitchen.save
-      redirect_to edit_kitchen_path(id:@kitchen.id)
+      redirect_to recipe_kitchen_path(recipe_id:params[:recipe_id],id:@kitchen.id)
     else
-      redirect_to recipe_path(id:params[:recipe_])
+      redirect_to recipe_path(id:params[:recipe_id])
     end
   end
 
   def edit
     @kitchen = Kitchen.find(params[:id])
     if current_user != @kitchen.user.last
-      redirect_to recipe_kitchen_path(recipe_id:params[:recipe_id],id:params[:id])
+      redirect_to recipe_kitchen_path(recipe_id:@kitchen.recipe.id,id:params[:id])
     end
   end
 

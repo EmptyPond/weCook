@@ -16,8 +16,8 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(recipe_params)
     if @recipe.save
-      current_user.kitchen.create(recipe_id: @recipe.id)
-      redirect_to recipe_path(id:@recipe.id)
+      @kitchen = current_user.kitchen.create(name: "#{current_user.email}'s kitchen",recipe_id:@recipe.id)
+      redirect_to recipe_kitchen_path(recipe_id:@recipe.id,id:@kitchen.id)
     else
       redirect_to new_recipe_path
     end
