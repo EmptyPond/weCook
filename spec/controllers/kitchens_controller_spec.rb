@@ -1,6 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe KitchensController, type: :controller do
+  describe "kitchens#new" do
+    it "should allow me to access the new kitchen page if I'm logge in" do
+      kitchen = FactoryGirl.create(:kitchen)
+      login_user(kithen.user.last)
+      get :new
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should NOT allow me to access if i'm NOT logged in" do
+      kitchen = FactoryGirl.create(:kitchen)
+      get :new
+
+      expect(response).to redirect_to login_path
+    end
+  end
   describe "kitchens#show" do
     it "should let me see the kitchen show page" do
       kitchen = FactoryGirl.create(:kitchen)

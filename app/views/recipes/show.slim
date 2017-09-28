@@ -7,17 +7,15 @@ div.col-4
   = link_to "Edit Recipe", edit_recipe_path(@recipe.id)
 
 div.col-4
+  = link_to "Create Kitchen", recipe_kitchens_path(recipe_id:@recipe.id), method: :create
+
+div.col-4
   - @recipe.kitchen.each do |k|
     h2
       = link_to k.name, recipe_kitchen_path(recipe_id:@recipe.id,id:k.id) 
-    h4
-      - k.ingredients.each do |i|
-        p
-          = k.name
-        p
-          = k.amount
-    h4
-      - k.steps.each do |s|
-        p
-          = s.step_num
-          = s.description
+    - k.ingredients.each do |i|
+      = i.name
+      = i.amount
+    - k.steps.each do |s|
+      = s.step_num
+      = s.description

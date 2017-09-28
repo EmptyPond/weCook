@@ -11,3 +11,4 @@ h1
     - @kitchen.steps.each do |s|
       = s.step_num
       = s.description
+    = link_to "Add Steps", new_kitchen_step_path(kitchen_id:@kitchen.id)
