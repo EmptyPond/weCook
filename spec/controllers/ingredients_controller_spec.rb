@@ -53,4 +53,56 @@ RSpec.describe IngredientsController, type: :controller do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+  describe "kitchens#edit" do
+    it "should let me access the edit page if I am logged in and own the kitchen" do
+      ingredient = FactoryGirl.create(:ingredient)
+      login_user(ingredient.kitchen.user.last)
+      get :edit, params: {kitchen_id: ingredient.kitchen.id }
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should NOT let me access the edit page if I don't own the kitchen" do
+      ingredient = FactoryGirl.create(:ingredient)
+      user = FactoryGirl.create(:user)
+      login_user(user)
+      get :edit, params: {kitchen_id: ingredient.kitchen.id }
+
+      expect(response).to redirect_to recipe_kitchen_path(recipe_id:ingredient.kitchen.recipe.id,id:ingredient.kitchen.id)
+    end
+
+    it "should NOT let me access the edit page if I am not logged in" do 
+      ingredient = FactoryGirl.create(:ingredient)
+      get :edit, params: {kitchen_id: ingredient.kitchen.id }
+
+      expect(response).to redirect_to login_path
+    end
+  end
+
+  describe "kitchens#update" do
+    it "should let me update the ingredients" do
+      ingredient = FactoryGirl.create(:ingredient)
+      login_user(ingredient.kitchen.user.last)
+      post :update, params: { kitchen_id: ingredient.kitchen.id, ingredient: {name: "new stuff", amount: "tons" } }
+
+      expect(response).to redirect_to recipe_kitchen_path(recipe_id: ingredient.kitchen.recipe.id, id: ingredient.kitchen.id)
+      expect(ingredient.last.name).to eq("new stuff")
+    end
+
+    it "should NOT let me update if I am not logged in" do
+      ingredient = FactoryGirl.create(:ingredient)
+      post :update, params: { kitchen_id: ingredient.kitchen.id, ingredient: {name: "new stuff", amount: "tons" } }
+
+      expect(response).to redirect_to login_path
+    end
+
+    it "should not let me update if I do not own the kitchen" do
+      ingredient = FactoryGirl.create(:ingredient)
+      user = FactoryGirl.create(:user)
+      login_user(user)
+      post :update, params: { kitchen_id: ingredient.kitchen.id, ingredient: {name: "new stuff", amount: "tons" } }
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end
