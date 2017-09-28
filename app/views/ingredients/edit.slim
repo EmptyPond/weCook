@@ -1,2 +1,9 @@
-h1
-  | this is the edit ingredient page
+= form_for @ingredient do |i|
+  .field
+    = i.label :name
+    = i.text_field :name
+  .field
+    = i.label :amount
+    = i.text_field :amount
+  .action
+    = i.submit "Update"

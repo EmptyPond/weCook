@@ -1,10 +1,17 @@
-= link_to "Copy", kitchen_new_copy_path(kitchen_id:@kitchen.id)
+h1
+  = @kitchen.name
+div.col-3
+  = link_to "Edit Kitchen", edit_kitchen_path(id:@kitchen.id)
+div.col-3
+  = link_to "Copy", kitchen_new_copy_path(kitchen_id:@kitchen.id)
 h1
   | Ingredients!
   div.col-4
     - @kitchen.ingredients.each do |i|
       = i.name
       = i.amount
+      div.col4
+        = link_to "Edit Ingredient", edit_kitchen_ingredient_path(kitchen_id:@kitchen.id,id:i.id)
     = link_to "Add Ingredients", new_kitchen_ingredient_path(kitchen_id:@kitchen.id)
 h1
   | Steps!
@@ -12,4 +19,6 @@ h1
     - @kitchen.steps.each do |s|
       = s.step_num
       = s.description
+      div.col-4
+        = link_to "Edit Step", edit_kitchen_step_path(kitchen_id:@kitchen.id,id:s.id)
     = link_to "Add Steps", new_kitchen_step_path(kitchen_id:@kitchen.id)
