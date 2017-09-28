@@ -1,5 +1,5 @@
 class KitchensController < ApplicationController
-  before_action :require_login, only: [:new,:create,:edit,:update]
+  before_action :require_login, only: [:new,:create,:edit,:update,:new_copy,:create_copy]
 
   def new
     @kitchen = Recipe.find(params[:recipe_id]).kitchen.new
@@ -32,6 +32,25 @@ class KitchensController < ApplicationController
     elsif @kitchen.update(kitchen_params)
       redirect_to recipe_kitchen_path(recipe_id:params[:recipe_id],id:params[:id])
       #should add else clause to deal if @kitchen not saving
+    end
+  end
+
+  def new_copy
+  end
+
+  def create_copy
+    @new_kitchen = current_user.kitchen.new(kitchen_params)
+    @copied_kitchen = Kitchen.find(params[:kitchen_id])
+    if @new_kitchen.save
+      @copied_kitchen.ingredients.each do |i|
+        @new_kitchen.ingredients.create(name: i.name, amount: i.amount)
+      end
+      @copied_kitchen.steps.each do |s|
+        @new_kitchen.steps.create(step_num: s.step_num, description: s.description)
+      end
+      redirect_to recipe_kitchen_path(recipe_id:@new_kitchen.recipe.id,id:@new_kitchen.id)
+    else
+      redirect_to recipe_kitchen_path(recipe_id:@copied_kitchen.recipe.id,id:@copied_kitchen.id)
     end
   end
 

@@ -94,4 +94,40 @@ RSpec.describe KitchensController, type: :controller do
       expect(response).to redirect_to login_path
     end
   end
+  describe "kitchens#new_copy" do
+    it "should allow me to view the new copy page a existing kitchen if I'm logged in" do
+      kitchen = FactoryGirl.create(:kitchen)
+      login_user(kitchen.user.last)
+      get :new_copy, params: { kitchen_id: kitchen.id }
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should NOT allow me to view the new copy if I'm not logged in" do
+      kitchen = FactoryGirl.create(:kitchen)
+      get :new_copy, params: { kitchen_id: kitchen.id }
+
+      expect(response).to redirect_to login_path
+    end
+  end
+
+  describe "kitchens#create_copy" do
+    it "should allow me to create copy a existing kitchen if I'm logged in" do
+      ingredients = FactoryGirl.create(:ingredient)
+      login_user(ingredients.kitchen.user.last)
+      post :create_copy, params: { kitchen_id: ingredients.kitchen.id, kitchen: { name: "kitchen_copy", recipe_id: ingredients.kitchen.recipe.id } }
+      kitchen2 = Kitchen.last
+
+      expect(response).to redirect_to recipe_kitchen_path(recipe_id:kitchen2.recipe.id,id:kitchen2.id)
+      expect(kitchen2.name).to eq("kitchen_copy")
+      expect(kitchen2.ingredients.first.name).to eq("awesome")
+    end
+
+    it "should NOT allow me to create a copy if I'm not logged in" do
+      kitchen = FactoryGirl.create(:kitchen)
+      post :create_copy, params: { kitchen_id: kitchen.id , name: "kitchen_copy" }
+
+      expect(response).to redirect_to login_path
+    end
+  end
 end
