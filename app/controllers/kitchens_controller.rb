@@ -36,11 +36,14 @@ class KitchensController < ApplicationController
   end
 
   def new_copy
+    @copied_kitchen = Kitchen.find(params[:kitchen_id])
+    @new_kitchen = current_user.kitchen.new
   end
 
   def create_copy
     @new_kitchen = current_user.kitchen.new(kitchen_params)
     @copied_kitchen = Kitchen.find(params[:kitchen_id])
+    @new_kitchen.recipe_id = @copied_kitchen.recipe_id
     if @new_kitchen.save
       @copied_kitchen.ingredients.each do |i|
         @new_kitchen.ingredients.create(name: i.name, amount: i.amount)

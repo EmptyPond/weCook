@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   resources :sessions, only: :create
 
   resources :kitchens, only: [:edit] do
-    get '/kitchens/:kitchen_id/new_copy', to: 'kitchens#new_copy'
-    post '/kitchens/:kitchen_id/create_copy', to: 'kitchens#create_copy'
+    get 'new_copy', to: 'kitchens#new_copy'
+    post 'create_copy', to: 'kitchens#create_copy'
     resources :steps, only: [:new,:create]
     resources :ingredients, only: [:new,:create]
   end
