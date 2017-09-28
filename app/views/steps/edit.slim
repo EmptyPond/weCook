@@ -1,0 +1,9 @@
+= form_for @step do |s|
+  .field
+    = s.label :step_num
+    = s.text_field :step_num
+  .field
+    = s.label :description
+    = s.text_field :description
+  .action
+    = s.submit "Update"

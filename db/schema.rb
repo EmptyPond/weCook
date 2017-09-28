@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170924060401) do
+ActiveRecord::Schema.define(version: 20170927060146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,12 +18,19 @@ ActiveRecord::Schema.define(version: 20170924060401) do
   create_table "ingredients", force: :cascade do |t|
     t.string  "name"
     t.string  "amount"
-    t.integer "recipe_id"
+    t.integer "kitchen_id"
   end
 
   create_table "kitchens", force: :cascade do |t|
-    t.integer "user_id"
     t.integer "recipe_id"
+    t.string  "name"
+  end
+
+  create_table "kitchens_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "kitchen_id"
+    t.index ["kitchen_id"], name: "index_kitchens_users_on_kitchen_id", using: :btree
+    t.index ["user_id"], name: "index_kitchens_users_on_user_id", using: :btree
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -34,7 +41,7 @@ ActiveRecord::Schema.define(version: 20170924060401) do
   create_table "steps", force: :cascade do |t|
     t.integer "step_num"
     t.text    "description"
-    t.integer "recipe_id"
+    t.integer "kitchen_id"
   end
 
   create_table "users", force: :cascade do |t|
