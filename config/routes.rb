@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   resources :recipes, only: [:new,:show,:create,:index,:edit,:update] do
-    resources :kitchens, only: [:show,:create,:update]
+    resources :kitchens, only: [:new,:show,:create,:update]
   end
 
 end

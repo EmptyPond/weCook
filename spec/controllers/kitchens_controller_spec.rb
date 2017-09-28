@@ -4,15 +4,15 @@ RSpec.describe KitchensController, type: :controller do
   describe "kitchens#new" do
     it "should allow me to access the new kitchen page if I'm logge in" do
       kitchen = FactoryGirl.create(:kitchen)
-      login_user(kithen.user.last)
-      get :new
+      login_user(kitchen.user.last)
+      get :new, params: {recipe_id: kitchen.recipe.id }
 
       expect(response).to have_http_status(:success)
     end
 
     it "should NOT allow me to access if i'm NOT logged in" do
       kitchen = FactoryGirl.create(:kitchen)
-      get :new
+      get :new, params: {recipe_id: kitchen.recipe.id }
 
       expect(response).to redirect_to login_path
     end

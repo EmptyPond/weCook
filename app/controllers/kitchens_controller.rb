@@ -1,5 +1,9 @@
 class KitchensController < ApplicationController
-  before_action :require_login, only: [:create,:edit,:update]
+  before_action :require_login, only: [:new,:create,:edit,:update]
+
+  def new
+    @kitchen = Recipe.find(params[:recipe_id]).kitchen.new
+  end
 
   def show
     @kitchen = Kitchen.find(params[:id])
