@@ -1,5 +1,5 @@
 class IngredientsController < ApplicationController
-  before_action :require_login, only: [:new,:create]
+  before_action :require_login, only: [:new,:create,:edit,:update]
 
   def new
     #probably needs to be refactored due to being long
@@ -23,6 +23,22 @@ class IngredientsController < ApplicationController
     else
       #this will be if the inputs aren't ok. doesn't validate currently. 
       redirect_to new_kitchen_ingredient_path(params[:kitchen_id]) 
+    end
+  end
+
+  def edit
+    @ingredient = Ingredient.find(params[:id])
+    if current_user != @ingredient.kitchen.user.last
+      redirect_to recipe_kitchen_path(recipe_id:@ingredient.kitchen.recipe.id,id:@ingredient.kitchen.id)
+    end
+  end
+
+  def update
+    @ingredient = Ingredient.find(params[:id])
+    if current_user != @ingredient.kitchen.user.last
+      render plain: "Unauthorized!", status: :unauthorized
+    else @ingredient.update(ingredients_params)
+      redirect_to recipe_kitchen_path(recipe_id:@ingredient.kitchen.recipe.id,id:@ingredient.kitchen.id)
     end
   end
 

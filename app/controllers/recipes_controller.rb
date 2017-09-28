@@ -36,7 +36,7 @@ class RecipesController < ApplicationController
     #another spot we would have to change if we add explicit ownership of recipes.
     if current_user != @recipe.kitchen.last.user.last
       render plain: "Unauthorized!", status: :unauthorized
-    elsif @recipe.update(recipe_params)
+    else @recipe.update(recipe_params)
       #will add an else statement here if we have validations on types of input. 
       redirect_to recipe_path(params[:id])
     end
