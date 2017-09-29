@@ -1,2 +1,9 @@
-h1 
-  | this is the my_page
+h1
+  = current_user.email
+
+div.col-4
+  - current_user.recipes.each do |r|
+    = r.name
+div.col-4
+  - current_user.kitchen.each do |k|
+    = k.name
