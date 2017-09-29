@@ -20,7 +20,7 @@ RSpec.describe StaticPagesController, type: :controller do
       kitchen = FactoryGirl.create(:kitchen)
       get :my_page, params: { id: kitchen.user.last.id }
 
-      expect(response).to have_http_status(:success)
+      expect(response).to redirect_to login_path
     end
   end
 end
