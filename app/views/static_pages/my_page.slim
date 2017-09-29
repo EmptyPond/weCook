@@ -3,7 +3,7 @@ h1
 
 div.col-4
   - current_user.recipes.each do |r|
-    = r.name
+    = link_to r.name, recipe_path(id:r.id)
 div.col-4
   - current_user.kitchen.each do |k|
-    = k.name
+    = link_to k.name, recipe_kitchen_path(recipe_id:k.recipe.id,id:k.id)
