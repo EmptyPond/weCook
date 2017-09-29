@@ -8,7 +8,7 @@ div.col-lg-8.offset-lg-2.text-center
     = link_to "Create Kitchen", new_recipe_kitchen_path(recipe_id:@recipe.id)
 
 - @recipe.kitchen.each do |k|
-  div.col-sm-4.offset-sm-4.text-center.booyah-box
+  div.col-sm-4.offset-sm-4.col-10.offset-1.text-center.booyah-box
     h2
       = link_to k.name, recipe_kitchen_path(recipe_id:@recipe.id,id:k.id) 
     br/

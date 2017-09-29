@@ -4,7 +4,7 @@ div.col-md-8.offset-md-2.text-center
   p
     = link_to "Create Recipe", new_recipe_path
   - @recipe.each do |r|
-    div.col-md-8.offset-md-2.col-10.text-center.booyah-box
+    div.col-md-8.offset-md-2.col-10.offset-1.text-center.booyah-box
       h1
         = link_to r.name,recipe_path(r)
       h5
