@@ -14,7 +14,7 @@ class KitchensController < ApplicationController
     if @kitchen.save
       redirect_to recipe_kitchen_path(recipe_id:params[:recipe_id],id:@kitchen.id)
     else
-      redirect_to recipe_path(id:params[:recipe_id])
+      redirect_to new_recipe_kitchen_path(recipe_id:params[:recipe_id])
     end
   end
 
@@ -32,6 +32,8 @@ class KitchensController < ApplicationController
     elsif @kitchen.update(kitchen_params)
       redirect_to recipe_kitchen_path(recipe_id:params[:recipe_id],id:params[:id])
       #should add else clause to deal if @kitchen not saving
+    else
+      redirect_to edit_kitchen_path(id:@kitchen.id)
     end
   end
 

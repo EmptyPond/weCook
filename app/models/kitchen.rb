@@ -3,4 +3,5 @@ class Kitchen < ApplicationRecord
   belongs_to :recipe
   has_many :ingredients
   has_many :steps
+  validates_presence_of :name, :recipe_id
 end

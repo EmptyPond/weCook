@@ -1,7 +1,11 @@
-- @recipe.each do |r|
+div.col-md-8.offset-md-2.text-center
   h1
-    div.col-4
-      = link_to r.name,recipe_path(r)
-  h5
-    div.col-4
-      = r.description
+    | Recipes
+  p
+    = link_to "Create Recipe", new_recipe_path
+  - @recipe.each do |r|
+    div.col-md-8.offset-md-2.col-10.offset-1.text-center.booyah-box
+      h1
+        = link_to r.name,recipe_path(r)
+      h5
+        = r.description

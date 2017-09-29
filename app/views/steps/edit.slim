@@ -1,9 +1,10 @@
-= form_for @step, url: kitchen_step_path(kitchen_id:@step.kitchen.id,id:@step.id) do |s|
-  .field
-    = s.label :step_num
-    = s.text_field :step_num
-  .field
-    = s.label :description
-    = s.text_field :description
-  .action
-    = s.submit "Update"
+div.col-8.offset-2.text-center.booyah-box.new-box
+  = form_for @step, url: kitchen_step_path(kitchen_id:@step.kitchen.id,id:@step.id) do |s|
+    .field
+      = s.label :step_num
+      = s.text_field :step_num
+    .field
+      = s.label :description
+      = s.text_field :description
+    .action
+      = s.submit "Update"
