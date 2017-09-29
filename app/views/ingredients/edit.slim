@@ -1,4 +1,4 @@
-= form_for @ingredient do |i|
+= form_for @ingredient,url: kitchen_ingredient_path(kitchen_id:@ingredient.kitchen.id,id:@ingredient.id) do |i|
   .field
     = i.label :name
     = i.text_field :name
