@@ -1,24 +1,25 @@
-div.col-8.offset-1
+div.col-lg-8.offset-lg-2.text-center
   h1
+    |Kitchens making 
     = @recipe.name
   p
     = @recipe.description
   p
-    = link_to "Edit Recipe", edit_recipe_path(@recipe.id)
-  p
     = link_to "Create Kitchen", new_recipe_kitchen_path(recipe_id:@recipe.id)
 
 - @recipe.kitchen.each do |k|
-  div.col-8.offset-2.text-center
+  div.col-sm-4.offset-sm-4.text-center.booyah-box
     h2
       = link_to k.name, recipe_kitchen_path(recipe_id:@recipe.id,id:k.id) 
     br/
-    div.row
-      div.col-3.offset-3
+    div.row.text-center
+      div.col-lg-3.offset-lg-2.text-center
         h4
           |Ingredients: 
+          br/
           = k.ingredients.count
-      div.col-3
+      div.col-lg-3.offset-lg-2.text-center
         h4
           |Steps: 
+          br/
           = k.steps.count

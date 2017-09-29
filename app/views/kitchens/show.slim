@@ -1,32 +1,36 @@
-h1
-  = @kitchen.name
-div.col-3
-  = link_to "Edit Kitchen Name", edit_kitchen_path(id:@kitchen.id)
-div.col-3
-  = link_to "Copy", kitchen_new_copy_path(kitchen_id:@kitchen.id)
-div.col-8.offset-2
+div.col-md-8.offset-md-2.text-center
+  h1
+    = @kitchen.name
+  - if current_user == @kitchen.user.last
+    p
+      = link_to "Edit Kitchen Name", edit_kitchen_path(id:@kitchen.id)
+  p
+    = link_to "Copy", kitchen_new_copy_path(kitchen_id:@kitchen.id)
+div.col-md-8.offset-md-2
   h1
     | Ingredients!
   - @kitchen.ingredients.each do |i|
-    div.offset-1
+    div.offset-md-1.booyah-box
       div.row
-        div.col-2
+        div.col-md-2
           = i.name
-        div.col-2.offset-2
+        div.col-md-2.offset-md-1
           = i.amount
-        p.col-2.offset-4
-          = link_to "Edit Ingredient", edit_kitchen_ingredient_path(kitchen_id:@kitchen.id,id:i.id)
+        - if current_user == @kitchen.user.last
+          p.col-md-2.offset-md-5
+            = link_to "Edit Ingredient", edit_kitchen_ingredient_path(kitchen_id:@kitchen.id,id:i.id)
   = link_to "Add Ingredients", new_kitchen_ingredient_path(kitchen_id:@kitchen.id)
-div.col-8.offset-2
+div.col-md-8.offset-md-2
   h1
     | Steps!
   - @kitchen.steps.each do |s|
-    div.offset-1
+    div.offset-md-1.booyah-box
       div.row
-        h3.col-2
+        h3.col-md-2
           = s.step_num
-        p.col-2.offset-2
+        p.col-md-2.offset-md-2
           = s.description
-        p.col-2.offset-4
-          = link_to "Edit Step", edit_kitchen_step_path(kitchen_id:@kitchen.id,id:s.id)
+        - if current_user == @kitchen.user.last
+          p.col-md-2.offset-md-4
+            = link_to "Edit Step", edit_kitchen_step_path(kitchen_id:@kitchen.id,id:s.id)
   = link_to "Add Steps", new_kitchen_step_path(kitchen_id:@kitchen.id)

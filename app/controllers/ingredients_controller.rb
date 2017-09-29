@@ -21,7 +21,7 @@ class IngredientsController < ApplicationController
     elsif @ingredient.save
       redirect_to recipe_kitchen_path(recipe_id:@ingredient.kitchen.recipe.id, id:params[:kitchen_id])
     else
-      #this will be if the inputs aren't ok. doesn't validate currently. 
+      #this will be if the inputs aren't ok.
       redirect_to new_kitchen_ingredient_path(params[:kitchen_id]) 
     end
   end
@@ -37,8 +37,10 @@ class IngredientsController < ApplicationController
     @ingredient = Ingredient.find(params[:id])
     if current_user != @ingredient.kitchen.user.last
       render plain: "Unauthorized!", status: :unauthorized
-    else @ingredient.update(ingredients_params)
+    elsif @ingredient.update(ingredients_params)
       redirect_to recipe_kitchen_path(recipe_id:@ingredient.kitchen.recipe.id,id:@ingredient.kitchen.id)
+    else 
+      redirect_to new_kitchen_ingredient_path(kitchen_id:@ingredient.kitchen.id,id:@ingredient.id)
     end
   end
 

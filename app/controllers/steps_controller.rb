@@ -36,8 +36,10 @@ class StepsController < ApplicationController
     @step = Step.find(params[:id])
     if current_user != @step.kitchen.user.last
       render plain: "Unauthorized!", status: :unauthorized
-    else @step.update(steps_params)
+    elsif @step.update(steps_params)
       redirect_to recipe_kitchen_path(recipe_id:@step.kitchen.recipe.id,id:@step.kitchen.id)
+    else
+      redirect_to edit_kitchen_step_path(kitchen_id:@step.kitchen.id,id:@step.id)
     end
   end
   private
