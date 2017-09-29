@@ -1,21 +1,24 @@
-div.col-4
-  = @recipe.name
-div.col-4
-  = @recipe.description
+div.col-8.offset-1
+  h1
+    = @recipe.name
+  p
+    = @recipe.description
+  p
+    = link_to "Edit Recipe", edit_recipe_path(@recipe.id)
+  p
+    = link_to "Create Kitchen", new_recipe_kitchen_path(recipe_id:@recipe.id)
 
-div.col-4
-  = link_to "Edit Recipe", edit_recipe_path(@recipe.id)
-
-div.col-4
-  = link_to "Create Kitchen", new_recipe_kitchen_path(recipe_id:@recipe.id)
-
-div.col-4
-  - @recipe.kitchen.each do |k|
+- @recipe.kitchen.each do |k|
+  div.col-8.offset-2.text-center
     h2
       = link_to k.name, recipe_kitchen_path(recipe_id:@recipe.id,id:k.id) 
-    - k.ingredients.each do |i|
-      = i.name
-      = i.amount
-    - k.steps.each do |s|
-      = s.step_num
-      = s.description
+    br/
+    div.row
+      div.col-3.offset-3
+        h4
+          |Ingredients: 
+          = k.ingredients.count
+      div.col-3
+        h4
+          |Steps: 
+          = k.steps.count

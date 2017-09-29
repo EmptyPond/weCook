@@ -1,9 +1,10 @@
-= form_for @step,url: kitchen_steps_path(kitchen_id:@step.kitchen.id) do |s|
-  .field
-    = s.label :step_number
-    = s.text_field :step_num
-  .field
-    = s.label :description
-    = s.text_field :description
-  .action
-    = s.submit "Create"
+div.col-8.offset-2
+  = form_for @step,url: kitchen_steps_path(kitchen_id:@step.kitchen.id) do |s|
+    .field
+      = s.label :step_number
+      = s.text_field :step_num
+    .field
+      = s.label :description
+      = s.text_field :description
+    .action
+      = s.submit "Create"

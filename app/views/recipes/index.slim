@@ -1,7 +1,7 @@
-- @recipe.each do |r|
-  h1
-    div.col-4
-      = link_to r.name,recipe_path(r)
-  h5
-    div.col-4
-      = r.description
+div.col-8.offset-2
+  - @recipe.each do |r|
+    div.col-8.offset-2.text-center
+      h1
+        = link_to r.name,recipe_path(r)
+      h5
+        = r.description

@@ -1,6 +1,7 @@
-= form_for @kitchen, url: recipe_kitchens_path(recipe_id:@kitchen.recipe.id) do |k|
-  .field 
-    = k.label :name
-    = k.text_field :name
-  .action 
-    = k.submit "Create"
+div.col-8.offset-2.text-center
+  = form_for @kitchen, url: recipe_kitchens_path(recipe_id:@kitchen.recipe.id) do |k|
+    .field 
+      = k.label :name
+      = k.text_field :name
+    .action 
+      = k.submit "Create"

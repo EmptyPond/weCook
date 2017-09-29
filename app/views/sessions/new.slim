@@ -1,9 +1,10 @@
-= form_tag sessions_path do
-  .field 
-    = label_tag :email
-    = text_field_tag :email
-  .field 
-    = label_tag :password
-    = password_field_tag :password
-  .action
-    = submit_tag "log in"
+div.col-8.offset-2
+  = form_tag sessions_path do
+    .field 
+      = label_tag :email
+      = text_field_tag :email
+    .field 
+      = label_tag :password
+      = password_field_tag :password
+    .action
+      = submit_tag "log in"

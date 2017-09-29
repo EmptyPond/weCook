@@ -1,9 +1,10 @@
-= form_for @ingredient,url: kitchen_ingredient_path(kitchen_id:@ingredient.kitchen.id,id:@ingredient.id) do |i|
-  .field
-    = i.label :name
-    = i.text_field :name
-  .field
-    = i.label :amount
-    = i.text_field :amount
-  .action
-    = i.submit "Update"
+div.col-8.offset-2
+  = form_for @ingredient,url: kitchen_ingredient_path(kitchen_id:@ingredient.kitchen.id,id:@ingredient.id) do |i|
+    .field
+      = i.label :name
+      = i.text_field :name
+    .field
+      = i.label :amount
+      = i.text_field :amount
+    .action
+      = i.submit "Update"
